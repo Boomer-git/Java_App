@@ -1,18 +1,14 @@
-# Use OpenJDK 17 as base image
 FROM openjdk:17
 
-# Set working directory
 WORKDIR /usr/src/myapp
 
-# Copy the Java app into the container
-COPY App.java /usr/src/myapp/
+# Add Spark dependency (fat jar)
+ADD https://repo1.maven.org/maven2/com/sparkjava/spark-core/2.9.4/spark-core-2.9.4.jar /usr/src/myapp/
 
-# Compile the Java program
-RUN javac App.java
+COPY CalculatorServer.java .
 
-# Expose port 80 for web access
+RUN javac -cp "spark-core-2.9.4.jar" CalculatorServer.java
+
 EXPOSE 80
 
-# Run the application
-CMD ["java", "App"]
-
+CMD ["java", "-cp", ".:spark-core-2.9.4.jar", "CalculatorServer"]
