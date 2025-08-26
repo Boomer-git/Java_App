@@ -1,6 +1,20 @@
+# Use OpenJDK 17 as base image
 FROM openjdk:17
-COPY App.java /usr/src/myapp/
+
+# Install netcat to test connectivity (optional)
+RUN apt-get update && apt-get install -y curl
+
+# Set working directory
 WORKDIR /usr/src/myapp
+
+# Copy the Java app into the container
+COPY App.java /usr/src/myapp/
+
+# Compile the Java program
 RUN javac App.java
+
+# Expose port 80 for web access
 EXPOSE 80
+
+# Run the application
 CMD ["java", "App"]
