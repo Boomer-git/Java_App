@@ -1,9 +1,6 @@
 # Use OpenJDK 17 as base image
 FROM openjdk:17
 
-# Install netcat to test connectivity (optional)
-RUN apt-get update && apt-get install -y curl
-
 # Set working directory
 WORKDIR /usr/src/myapp
 
@@ -18,3 +15,4 @@ EXPOSE 80
 
 # Run the application
 CMD ["java", "App"]
+
